@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -47,7 +47,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>100</y>
         <width>56</width>
         <height>16</height>
        </rect>
@@ -60,30 +60,17 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>50</y>
+        <y>90</y>
         <width>271</width>
         <height>22</height>
        </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>100</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Source</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_source">
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>100</y>
+        <y>130</y>
         <width>271</width>
         <height>21</height>
        </rect>
@@ -93,23 +80,13 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>160</y>
+        <y>180</y>
         <width>111</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
        <string>Date de reportage</string>
-      </property>
-     </widget>
-     <widget class="QDateEdit" name="dateEdit">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>150</y>
-        <width>110</width>
-        <height>22</height>
-       </rect>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -138,7 +115,7 @@
        <string>Annuler</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_code">
+     <widget class="QLineEdit" name="lineEdit_codeR">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -171,6 +148,52 @@
        <string>Ajouter</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>56</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Source</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Code Competion</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_codeC">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>50</y>
+        <width>271</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_date">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>170</y>
+        <width>271</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -189,7 +212,7 @@
        <string>Code Reportage</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_codeA">
+     <widget class="QLineEdit" name="lineEdit_codeRA">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -203,7 +226,7 @@
       <property name="geometry">
        <rect>
         <x>390</x>
-        <y>450</y>
+        <y>490</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -216,7 +239,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>460</y>
+        <y>470</y>
         <width>171</width>
         <height>22</height>
        </rect>
@@ -241,7 +264,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>490</y>
+        <y>500</y>
         <width>27</width>
         <height>22</height>
        </rect>
@@ -258,6 +281,29 @@
         <width>461</width>
         <height>381</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_codeCA">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>440</y>
+        <width>271</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>440</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Code Competion</string>
       </property>
      </widget>
     </widget>

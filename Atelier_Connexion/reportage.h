@@ -6,26 +6,30 @@
 class Reportage
 {
 private:
-    QString codeReportage;
+    int codeReportage;
+    int codeCompetition;
     QString source;
     QString contenuReport;
     QString date;
     QString editeur;
 public:
     Reportage();
-    Reportage(QString, QString, QString, QString);
-    QString getcode();
+    Reportage(int, int, QString, QString, QString, QString);
+    int getcode();
+    int getcodeCmp();
     QString getediteur();
     QString getsource();
     QString getsdate();
     QString getcont();
-    void setcode(QString);
+    void setcode(int);
+    void setcodeCmp(int);
     void setsource(QString);
     void setdate(QString);
     void setcont(QString);
     void setediteur(QString);
     bool ajouter();
     QSqlQueryModel* afficher();
+    bool supprimer(int);
 };
 
 #endif // REPORTAGE_H

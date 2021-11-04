@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "reportage.h"
+#include <qmessagebox.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,11 +19,39 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_ajouter_clicked()
 {
-    QString cd = ui->lineEdit_code->text();
+    int cd = ui->lineEdit_codeR->text().toInt();
+    int cdC = ui->lineEdit_codeC->text().toInt();
     QString ed = ui->lineEdit_editeur->text();
     QString s =ui->lineEdit_source->text();
     QString cnt=ui->lineEdit_report->text();
-    //affectattion de la date
-    Reportage R(cd, ed, s,cnt);
-    R.ajouter();
+    QString d = ui->lineEdit_date->text();
+    Reportage R(cd, cdC, ed, s, d, cnt);
+    bool test = R.ajouter();
+    QMessageBox msgBox;
+
+    if(test)
+       {
+           msgBox.setText("Ajout avec succes.");
+           ui->tableView_reportA->setModel(R.afficher());
+       }
+    else
+        msgBox.setText("Echec d'ajout");
+    msgBox.exec();
+}
+
+void MainWindow::on_pushButton_supp_clicked()
+{
+    Reportage R1; R1.setcode(ui->lineEdit_codeRA->text().toInt());
+    bool test = R1.supprimer(R1.getcode());
+    QMessageBox msgBox;
+
+    if(test)
+    {
+        msgBox.setText("Suppression avec succes.");
+    ui->tableView_reportA->setModel(R.afficher());
+
+    }
+    else
+        msgBox.setText("Echec de suppression");
+    msgBox.exec();
 }
