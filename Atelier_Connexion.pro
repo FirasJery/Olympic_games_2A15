@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    reclamation.cpp
 
 HEADERS += \
         mainwindow.h \
-    connection.h
+    connection.h \
+    reclamation.h
 
 FORMS += \
         mainwindow.ui
