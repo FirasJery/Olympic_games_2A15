@@ -46,3 +46,24 @@ void MainWindow::on_pushButton_3_clicked()
 {
      ui->tableView->setModel(rmp.afficher());
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    bool i;
+    int id_del;
+    id_del=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+
+    i=rmp.supprimer(id_del);
+    if(i)
+    {
+        QMessageBox::information(nullptr, QObject::tr("database is open"),
+                    QObject::tr("connection successful.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+    else
+       { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                    QObject::tr("connection failed.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel); }
+
+}

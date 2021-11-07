@@ -42,7 +42,11 @@ bool Reclamation::ajouter()
     query.bindValue(":id_j",id_j);
     return query.exec();
 }
-bool Reclamation::supprimer(int)
+bool Reclamation::supprimer(int id)
 {
-
+    QSqlQuery query;
+    QString res=QString::number(id);
+    query.prepare("DELETE FROM reclamation WHERE id_rec= :id");
+    query.bindValue(":id",res);
+    return query.exec();
 }
