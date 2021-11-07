@@ -50,3 +50,19 @@ bool Reclamation::supprimer(int id)
     query.bindValue(":id",res);
     return query.exec();
 }
+bool Reclamation::modifier(int id)
+{
+    QSqlQuery query;
+    //QString res=QString::number(id);
+    query.prepare("UPDATE reclamation SET categorie=:categorie,etat=:etat,contenu=:contenu,date_a=:date_a,mail=:mail,id_j=:id_j WHERE id_rec=:id");
+    query.bindValue(":categorie",categorie);
+    query.bindValue(":etat",etat);
+    query.bindValue(":contenu",contenu);
+    query.bindValue(":date_a",date_a);
+    query.bindValue(":mail",mail);
+    query.bindValue(":id_j",id_j);
+    query.bindValue(":id",id);
+
+    return query.exec();
+}
+

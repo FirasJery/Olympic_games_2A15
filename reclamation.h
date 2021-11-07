@@ -37,6 +37,7 @@ public:
     QSqlQueryModel * afficher();
     bool ajouter();
     bool supprimer(int);
+    bool modifier(int);
 };
 
 #endif // RECLAMATION_H
