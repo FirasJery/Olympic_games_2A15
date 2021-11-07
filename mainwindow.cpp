@@ -24,6 +24,8 @@ void MainWindow::on_pushButton_clicked()
     QDate d=ui->date->date();
     QString mail=ui->line_mail->text();
 
+
+
     Reclamation R(1,categorie,"just added",contenu,d,mail,1);
 
     bool test=R.ajouter();
@@ -38,4 +40,9 @@ void MainWindow::on_pushButton_clicked()
        { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
                     QObject::tr("connection failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel); }
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+     ui->tableView->setModel(rmp.afficher());
 }

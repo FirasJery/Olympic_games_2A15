@@ -34,7 +34,7 @@ public:
     void set_mail(QString m){mail=m;}
     void set_idj(int k){id_j=k;}
    //other functions
-    void afficher();
+    QSqlQueryModel * afficher();
     bool ajouter();
     bool supprimer(int);
 };
