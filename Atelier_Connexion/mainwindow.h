@@ -20,6 +20,8 @@ private slots:
 
     void on_pushButton_supp_clicked();
 
+    void on_pushButton_modifier_clicked();
+
 private:
     Ui::MainWindow *ui;
     Reportage R;

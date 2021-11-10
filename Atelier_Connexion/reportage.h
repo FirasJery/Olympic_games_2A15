@@ -30,6 +30,7 @@ public:
     bool ajouter();
     QSqlQueryModel* afficher();
     bool supprimer(int);
+    bool recherche(int);
 };
 
 #endif // REPORTAGE_H

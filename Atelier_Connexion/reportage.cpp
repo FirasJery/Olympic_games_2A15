@@ -65,4 +65,20 @@ QSqlQueryModel* Reportage::afficher()
     return model;
 }
 
+bool Reportage::recherche(int cd)
+{
+    QSqlQuery query;
+        QString id_string = QString::number(cd);
+        query.prepare(" selet * from equipement where indentifiant_eq='"+id_string+"'");
+    while(query.next())
+    {
+        int cd = query.value(0).toInt();
+        int cdm = query.value(1).toInt();
+        QString s = query.value(2).toString() ;
+        QString cnt = query.value(3).toString();
+        QString d = query.value(4).toString();
+        QString e = query.value(5).toString();
+    }
+    return query.exec();
+}
 

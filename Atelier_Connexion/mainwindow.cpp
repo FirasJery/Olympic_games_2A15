@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "reportage.h"
 #include <qmessagebox.h>
+#include <QSqlTableModel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -53,5 +54,34 @@ void MainWindow::on_pushButton_supp_clicked()
     }
     else
         msgBox.setText("Echec de suppression");
+    msgBox.exec();
+}
+
+
+void MainWindow::on_pushButton_modifier_clicked()
+{
+    Reportage R;
+    R.setcode(ui->lineEdit_codeMod->text().toInt());
+    bool test = R.recherche(R.getcode());
+    QMessageBox msgBox;
+
+    if(test)
+    {
+                if(ui->pushButton_modifier->isChecked())
+                {
+                      ui->pushButton_modifier->setText("Modifiable");
+                      QSqlTableModel *TableModel= new QSqlTableModel();
+                      TableModel->setTable("gestion_place_parking");
+                      TableModel->select();
+                      ui->tableView_reportA->setModel(TableModel);
+                }
+                 else
+                {
+                      ui->pushButton_modifier->setText("Modifier");
+                      ui->tableView_reportA->setModel(R.afficher());
+                }
+    }
+    else
+        msgBox.setText("identifiant incorrect");
     msgBox.exec();
 }
