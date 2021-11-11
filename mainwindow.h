@@ -24,6 +24,10 @@ private slots:
 
     void on_modifier_clicked();
 
+    void on_tri_id_clicked();
+
+    void on_tri_age_clicked();
+
 private:
     Ui::MainWindow *ui;
    joueur ptmp;

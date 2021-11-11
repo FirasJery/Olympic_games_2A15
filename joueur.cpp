@@ -5,7 +5,7 @@ joueur::joueur(QString nom ,QString prenom,QString nationallite, int id ,int num
 {
 
      this->nom=nom;
-    this->num=num;
+     this->num=num;
      this->prenom=prenom;
      this->id=id;
      this->age=age;
@@ -64,4 +64,32 @@ bool joueur::modifier(int id)
     query.bindValue(":nationallite",nationallite);
 
     return query.exec();
+}
+QSqlQueryModel* joueur::tri()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from JOUEUR order by ID_Joueur");
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
+}
+QSqlQueryModel* joueur::triage()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from JOUEUR order by AGE");
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
 }

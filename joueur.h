@@ -36,6 +36,8 @@ QString nationallite;
     QSqlQueryModel * afficher();
     bool supprimer (int id);
     bool modifier(int id);
+    QSqlQueryModel *tri();
+    QSqlQueryModel *triage();
 
 };
 

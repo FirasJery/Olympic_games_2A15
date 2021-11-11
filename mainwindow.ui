@@ -268,7 +268,7 @@ background-color: rgb(255, 237, 252);</string>
      <string>SMS </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="tri_id">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -278,7 +278,7 @@ background-color: rgb(255, 237, 252);</string>
      </rect>
     </property>
     <property name="text">
-     <string>trie</string>
+     <string>trie par id</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_7">
@@ -488,6 +488,19 @@ background-color: rgb(255, 237, 252);</string>
       <string>supprimer </string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="tri_age">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>470</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>trie par age</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

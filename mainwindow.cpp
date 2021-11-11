@@ -5,12 +5,19 @@
 #include <QTableView>
 #include <QAbstractItemView>
 #include <joueur.h>
+#include <QIntValidator>
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
     ui->tableView->setModel(ptmp.afficher());
+
+    //controle saisir
+    ui->id->setValidator(new QIntValidator(0,99,this));
+    ui->num->setValidator(new QIntValidator(00000000,99999999,this));
+
+
 
 
 }
@@ -114,4 +121,14 @@ void MainWindow::on_modifier_clicked()
                                                 "click cancel to exit."),QMessageBox::Cancel);
 
            }
+}
+
+void MainWindow::on_tri_id_clicked()
+{
+            ui->tableView->setModel(ptmp.tri());
+}
+
+void MainWindow::on_tri_age_clicked()
+{
+            ui->tableView->setModel(ptmp.triage());
 }
