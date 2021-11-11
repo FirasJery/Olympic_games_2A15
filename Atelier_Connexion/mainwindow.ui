@@ -17,14 +17,14 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>130</x>
       <y>10</y>
       <width>961</width>
       <height>571</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -161,29 +161,6 @@
        <string>Source</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>101</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Code Competion</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_codeC">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>50</y>
-        <width>271</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="lineEdit_date">
       <property name="geometry">
        <rect>
@@ -314,8 +291,8 @@
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>220</y>
+        <x>10</x>
+        <y>20</y>
         <width>101</width>
         <height>16</height>
        </rect>
@@ -328,7 +305,7 @@
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>210</y>
+        <y>10</y>
         <width>271</width>
         <height>22</height>
        </rect>
@@ -337,8 +314,8 @@
      <widget class="QPushButton" name="pushButton_modifier">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>280</y>
+        <x>380</x>
+        <y>480</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -350,14 +327,93 @@
      <widget class="QPushButton" name="pushButton_4">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>290</y>
+        <x>10</x>
+        <y>490</y>
         <width>93</width>
         <height>28</height>
        </rect>
       </property>
       <property name="text">
        <string>Annuler</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>56</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Editeur</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_editeurM">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>110</y>
+        <width>271</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>180</y>
+        <width>56</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Source</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_sourceM">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>170</y>
+        <width>271</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>240</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Date de reportage</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_dateM">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>230</y>
+        <width>271</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_reportM">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>280</y>
+        <width>461</width>
+        <height>201</height>
+       </rect>
       </property>
      </widget>
     </widget>

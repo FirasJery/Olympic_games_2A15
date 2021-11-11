@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-   // ui->tableView_reportA->setModel(R.afficher());
+     ui->tableView_reportA->setModel(R.afficher());
 }
 
 MainWindow::~MainWindow()
@@ -21,12 +21,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_ajouter_clicked()
 {
     int cd = ui->lineEdit_codeR->text().toInt();
-    int cdC = ui->lineEdit_codeC->text().toInt();
     QString ed = ui->lineEdit_editeur->text();
     QString s =ui->lineEdit_source->text();
     QString cnt=ui->lineEdit_report->text();
     QString d = ui->lineEdit_date->text();
-    Reportage R(cd, cdC, ed, s, d, cnt);
+    Reportage R(cd, ed, s, d, cnt);
     bool test = R.ajouter();
     QMessageBox msgBox;
 
@@ -60,28 +59,23 @@ void MainWindow::on_pushButton_supp_clicked()
 
 void MainWindow::on_pushButton_modifier_clicked()
 {
-    Reportage R;
-    R.setcode(ui->lineEdit_codeMod->text().toInt());
-    bool test = R.recherche(R.getcode());
+    int cd= ui->lineEdit_codeMod->text().toInt();
+    QString ed = ui->lineEdit_editeurM->text();
+    QString s =ui->lineEdit_sourceM->text();
+    QString cnt=ui->lineEdit_reportM->text();
+    QString d = ui->lineEdit_dateM->text();
+    Reportage R(cd, ed, s, d, cnt);
+
+    bool test = R.modifier();
     QMessageBox msgBox;
 
     if(test)
-    {
-                if(ui->pushButton_modifier->isChecked())
-                {
-                      ui->pushButton_modifier->setText("Modifiable");
-                      QSqlTableModel *TableModel= new QSqlTableModel();
-                      TableModel->setTable("gestion_place_parking");
-                      TableModel->select();
-                      ui->tableView_reportA->setModel(TableModel);
-                }
-                 else
-                {
-                      ui->pushButton_modifier->setText("Modifier");
-                      ui->tableView_reportA->setModel(R.afficher());
-                }
-    }
+       {
+           msgBox.setText("Modifier avec succes.");
+           ui->tableView_reportA->setModel(R.afficher());
+       }
     else
-        msgBox.setText("identifiant incorrect");
+        msgBox.setText("Echec de modification");
     msgBox.exec();
 }
+
