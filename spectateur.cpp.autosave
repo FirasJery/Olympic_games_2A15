@@ -42,6 +42,7 @@ void Spectateur:: sethoraire_s(int horaire_s ){this->horaire_s=horaire_s;}
 void Spectateur:: setnbr_ticket(int nbr_ticket){this->nbr_ticket=nbr_ticket;}
 void Spectateur:: setadresse(QString adresse){this->adresse=adresse;}
 void Spectateur:: settype_classe(QString type_classe){this->type_classe=type_classe;}
+
 bool Spectateur::ajouter()
 {
     QSqlQuery query;
@@ -51,11 +52,11 @@ bool Spectateur::ajouter()
       QString horaire_e_string= QString::number(horaire_e);
      QString horaire_s_string= QString::number(horaire_s);
     query.prepare("insert into spectateur (id, age,adresse,capacite, type_classe,horaire_e,horaire_s,nbr_ticket) "
-                  "VALUES (:id, :age,: adresse, :capacite, :type_classe, :horaire_e, :horaire_s, :nbr_ticket)");
+                  "values (:id, :age,: adresse, :capacite, :type_classe, :horaire_e, :horaire_s, :nbr_ticket)");
     query.bindValue(0, id_string);
-    query.bindValue(1, age);
+    query.bindValue(1, age_string);
     query.bindValue(2, adresse);
-    query.bindValue(3, capacite);
+    query.bindValue(3, capacite_string);
     query.bindValue(4, type_classe);
     query.bindValue(5, horaire_e);
     query.bindValue(6, horaire_s);
