@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include "reportage.h"
 #include "QMainWindow"
+#include <QSqlDatabase>
 
 namespace Ui {
 class MainWindow;

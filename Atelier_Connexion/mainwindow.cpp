@@ -3,6 +3,7 @@
 #include "reportage.h"
 #include <qmessagebox.h>
 #include <QSqlTableModel>
+#include <QSqlDatabase>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,11 +22,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_ajouter_clicked()
 {
     int cd = ui->lineEdit_codeR->text().toInt();
+    int cdC= ui->lineEdit_codeCMod->text().toInt();
     QString ed = ui->lineEdit_editeur->text();
     QString s =ui->lineEdit_source->text();
     QString cnt=ui->lineEdit_report->text();
     QString d = ui->lineEdit_date->text();
-    Reportage R(cd, ed, s, d, cnt);
+    Reportage R(cd, cdC, ed, s, d, cnt);
+
     bool test = R.ajouter();
     QMessageBox msgBox;
 
@@ -35,7 +38,7 @@ void MainWindow::on_pb_ajouter_clicked()
            ui->tableView_reportA->setModel(R.afficher());
        }
     else
-        msgBox.setText("Echec d'ajout");
+          msgBox.setText("Echec d'ajout");
     msgBox.exec();
 }
 
@@ -60,11 +63,12 @@ void MainWindow::on_pushButton_supp_clicked()
 void MainWindow::on_pushButton_modifier_clicked()
 {
     int cd= ui->lineEdit_codeMod->text().toInt();
+    int cdC= ui->lineEdit_codeCMod->text().toInt();
     QString ed = ui->lineEdit_editeurM->text();
     QString s =ui->lineEdit_sourceM->text();
     QString cnt=ui->lineEdit_reportM->text();
     QString d = ui->lineEdit_dateM->text();
-    Reportage R(cd, ed, s, d, cnt);
+    Reportage R(cd, cdC, ed, s, d, cnt);
 
     bool test = R.modifier();
     QMessageBox msgBox;
