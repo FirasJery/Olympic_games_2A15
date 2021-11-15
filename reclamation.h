@@ -38,6 +38,11 @@ public:
     bool ajouter();
     bool supprimer(int);
     bool modifier(int);
+    QSqlQueryModel * TriCategorie(QString cls);
+    QSqlQueryModel * TriEtat(QString cls);
+    QSqlQueryModel * TriDate(QString cls);
+    QSqlQueryModel * recherche(QString cls);
+
 };
 
 #endif // RECLAMATION_H

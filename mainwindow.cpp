@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+     ui->tableView->setModel(rmp.afficher());
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +35,7 @@ void MainWindow::on_pushButton_clicked()
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
+        ui->tableView->setModel(rmp.afficher());
 
 }
     else
@@ -59,6 +61,7 @@ void MainWindow::on_pushButton_2_clicked()
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
+        ui->tableView->setModel(rmp.afficher());
 
 }
     else
@@ -87,10 +90,35 @@ void MainWindow::on_pushButton_4_clicked()
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
+        ui->tableView->setModel(rmp.afficher());
 
 }
     else
        { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
                     QObject::tr("connection failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel); }
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    QString cls;
+    if (ui->radioButton->isChecked()) cls="ASC";
+    else if (ui->radioButton_2->isChecked()) cls="DESC";
+
+    switch (ui->comboBox->currentIndex()) {
+    case 0:
+        ui->tableView->setModel(rmp.TriCategorie(cls));
+        break;
+    case 1:
+        ui->tableView->setModel(rmp.TriDate(cls));
+        break;
+    case 2:
+        ui->tableView->setModel(rmp.TriEtat(cls));
+        break;
+    }
+}
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    ui->tableView->setModel(rmp.recherche(arg1));
 }

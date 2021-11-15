@@ -66,3 +66,67 @@ bool Reclamation::modifier(int id)
     return query.exec();
 }
 
+QSqlQueryModel * Reclamation::TriCategorie(QString cls)
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM reclamation ORDER BY categorie "+cls);
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_rec"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("catrgorie"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("etat"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("contenu"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("date_a"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("mail"));
+    model->setHeaderData(6,Qt::Horizontal,QObject::tr("id_j"));
+
+    return model;
+}
+
+
+QSqlQueryModel * Reclamation::TriDate(QString cls)
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM reclamation ORDER BY date_a "+cls);
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_rec"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("catrgorie"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("etat"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("contenu"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("date_a"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("mail"));
+    model->setHeaderData(6,Qt::Horizontal,QObject::tr("id_j"));
+
+    return model;
+}
+
+
+QSqlQueryModel * Reclamation::TriEtat(QString cls)
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM reclamation ORDER BY etat "+cls);
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_rec"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("catrgorie"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("etat"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("contenu"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("date_a"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("mail"));
+    model->setHeaderData(6,Qt::Horizontal,QObject::tr("id_j"));
+
+    return model;
+}
+
+
+QSqlQueryModel * Reclamation::recherche(QString a)
+{
+ //    query.prepare("INSERT INTO reclamation(categorie,etat,contenu,date_a,mail,id_j)""VALUES (:categorie,:etat,:contenu,:date_a,:mail,:id_j)");
+
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM reclamation WHERE ( categorie LIKE '%"+a+"%' OR etat LIKE '%"+a+"%' OR mail LIKE '%"+a+"%' OR id_j LIKE '%"+a+"%' ) ");
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_rec"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("catrgorie"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("etat"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("contenu"));
+    model->setHeaderData(4,Qt::Horizontal,QObject::tr("date_a"));
+    model->setHeaderData(5,Qt::Horizontal,QObject::tr("mail"));
+    model->setHeaderData(6,Qt::Horizontal,QObject::tr("id_j"));
+
+    return model;
+}
