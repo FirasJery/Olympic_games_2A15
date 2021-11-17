@@ -35,9 +35,9 @@ bool Reportage::ajouter()
     QSqlQuery query;
     QString id_string= QString::number(codeReportage);
     QString id_string2= QString::number(codeCompetition);
-         query.prepare("INSERT INTO REPORTAGE (CODE_REPORTAGE, CODE_COMPETITION, EDITEUR, SOURCE, DATE_REPORTAGE, CONTENU_REPORTAGE) " "VALUES ( :code_reportage, :code_competition, :editeur, :source, :date_reportage, :contenu_reportage)");
-         query.bindValue(" :code_reportage", id_string);
-         query.bindValue(" :code_competition", id_string2);
+         query.prepare("INSERT INTO REPORTAGE (CODE_REPORTAGE, CODE_COMPETITION, EDITEUR, SOURCE, DATE_REPORTAGE, CONTENU_REPORTAGE) " "VALUES ( :codeReportage, :codeCompetition, :editeur, :source, :date_reportage, :contenu_reportage)");
+         query.bindValue(" :codeReportage", id_string);
+         query.bindValue(" :codeCompetition", id_string2);
          query.bindValue(" :editeur", editeur);
          query.bindValue(" :source", source);
          query.bindValue(" :date_reportage", date);
@@ -48,7 +48,7 @@ bool Reportage::ajouter()
 bool Reportage::supprimer(int cd)
 {
     QSqlQuery query;
-         query.prepare("Delete from REPORTAGE where CODE_REPORTAGE:CODE_REPORTAGE");
+         query.prepare("Delete from REPORTAGE where CODE_REPORTAGE =: CODE_REPORTAGE");
          query.bindValue(0, cd);
          return query.exec();
 }
@@ -58,12 +58,12 @@ QSqlQueryModel* Reportage::afficher()
 {
     QSqlQueryModel* model=new QSqlQueryModel();
           model->setQuery("SELECT* FROM REPORTAGE");
-          model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code R"));
-          model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code C"));
+          model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code_R"));
+          model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code_C"));
           model->setHeaderData(1, Qt::Horizontal, QObject::tr("Editeur"));
           model->setHeaderData(2, Qt::Horizontal, QObject::tr("Source"));
           model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date"));
-          model->setHeaderData(3, Qt::Horizontal, QObject::tr("Contenu R"));
+          model->setHeaderData(3, Qt::Horizontal, QObject::tr("Contenu_R"));
     return model;
 }
 
@@ -96,4 +96,29 @@ bool Reportage::modifier()
          query.bindValue(":date_reportage", date);
          query.bindValue(":contenu_reportage", contenuReport);
          return query.exec();
+}
+
+QSqlQueryModel* Reportage ::trier(int i)
+{
+    QSqlQueryModel* model=new QSqlQueryModel();
+    if(i==1)
+             {
+                 model->setQuery("SELECT* FROM equipement ORDER BY EDITEUR asc");
+             }
+    else if (i==2)
+             {
+                 model->setQuery("SELECT* FROM equipement ORDER BY SOURCE asc");
+             }
+    else if(i==3)
+             {
+                 model->setQuery("SELECT* FROM equipement ORDER BY DATE_REPORTAGE asc");
+             }
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code_R"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Code_C"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Editeur"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Source"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Contenu_R"));
+
+    return model;
 }

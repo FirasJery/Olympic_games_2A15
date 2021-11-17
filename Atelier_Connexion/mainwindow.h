@@ -23,6 +23,10 @@ private slots:
 
     void on_pushButton_modifier_clicked();
 
+    void on_comboBox_trier_activated( QString );
+
+   void on_pushButton_pdf_clicked();
+
 private:
     Ui::MainWindow *ui;
     Reportage R;

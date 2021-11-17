@@ -37,6 +37,7 @@ public:
     bool supprimer(int);
     bool recherche(int);
     bool modifier();
+    QSqlQueryModel* trier (int);
 };
 
 #endif // REPORTAGE_H
