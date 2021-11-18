@@ -43,6 +43,8 @@ public:
     QSqlQueryModel * TriDate(QString cls);
     QSqlQueryModel * recherche(QString cls);
 
+
+
 };
 
 #endif // RECLAMATION_H

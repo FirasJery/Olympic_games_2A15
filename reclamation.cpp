@@ -116,7 +116,6 @@ QSqlQueryModel * Reclamation::TriEtat(QString cls)
 
 QSqlQueryModel * Reclamation::recherche(QString a)
 {
- //    query.prepare("INSERT INTO reclamation(categorie,etat,contenu,date_a,mail,id_j)""VALUES (:categorie,:etat,:contenu,:date_a,:mail,:id_j)");
 
     QSqlQueryModel *model=new QSqlQueryModel();
     model->setQuery("SELECT * FROM reclamation WHERE ( categorie LIKE '%"+a+"%' OR etat LIKE '%"+a+"%' OR mail LIKE '%"+a+"%' OR id_j LIKE '%"+a+"%' ) ");
@@ -130,3 +129,4 @@ QSqlQueryModel * Reclamation::recherche(QString a)
 
     return model;
 }
+

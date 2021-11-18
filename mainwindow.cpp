@@ -3,6 +3,7 @@
 #include "reclamation.h"
 #include "connection.h"
 #include <QMessageBox>
+#include <QSystemTrayIcon>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,7 +11,42 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0);
      ui->tableView->setModel(rmp.afficher());
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model = rmp.afficher();
+    int count=0;
+    for (int i = 0; i < model->rowCount(); i++) {
+        if ((model->data(model->index(i,4)).toDate().addDays(3) < QDate::currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
+        {
+            count++;
+        }}
+        if (count != 0){
+            QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
+            QString res=QString::number(count);
+            notifyIcon->show();
+            notifyIcon->showMessage("warning ! ","you have "+res+" reclamation not done",QSystemTrayIcon::Information,15000);
+        }
+
+
+
+
+ /*        QSqlQuery query;
+         QDate current=current.currentDate();
+         int i=0;
+         int nb=0;
+         do
+         {
+             query.exec("SELECT date_a FROM competition WHERE etat!='done'");
+             QDate d=query.value(i).toDate();
+             QDate compare=d.addDays(3);
+             if (current>compare)
+                 nb++;
+          }while (query.next());
+         QString res=QString::number(nb);*/
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -121,4 +157,31 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 {
     ui->tableView->setModel(rmp.recherche(arg1));
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    smtp = new Smtp("gestion.recs@gmail.com" , "gestiongestion", "smtp.gmail.com",465);
+    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+    msg=ui->message_mail->toPlainText();
+
+    smtp->sendMail("firas_test",ui->a_mail->text(),ui->objet_mail->text(),msg);
+
+    QMessageBox::information(nullptr, QObject::tr("SENT"),
+                             QObject::tr("Email Sended Successfully.\n"
+                                         "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+
+
+
+
+void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    if (index.data().toString() == ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),5)).toString()){
+        ui->tabWidget->setCurrentIndex(1);
+        ui->a_mail->setText(index.data().toString());
+    }
+
 }

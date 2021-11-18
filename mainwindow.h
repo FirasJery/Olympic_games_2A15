@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "reclamation.h"
+#include "smtp.h"
 namespace Ui {
 class MainWindow;
 }
@@ -28,9 +29,19 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+
+
+    void on_pushButton_6_clicked();
+
+
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     Reclamation rmp;
+    Smtp* smtp;
+    QString msg;
+    QString mail;
 };
 
 #endif // MAINWINDOW_H
