@@ -3,10 +3,9 @@
 # Project created by QtCreator 2018-10-26T21:45:23
 #
 #-------------------------------------------------
-
-QT       += core gui sql
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT +=core gui sql printsupport multimedia network
+QT +=widgets multimedia
+greaterThan(QT_MAJOR_VERSION,4):QT += widgets printsupport
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
@@ -28,12 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    spectateur.cpp
+    qcustomplot.cpp \
+    smtp.cpp \
+    spectateur.cpp \
+    spectateurfidele.cpp
 
 HEADERS += \
         mainwindow.h \
     connection.h \
-    spectateur.h
+    qcustomplot.h \
+    smtp.h \
+    spectateur.h \
+    spectateurfidele.h
 
 FORMS += \
         mainwindow.ui
