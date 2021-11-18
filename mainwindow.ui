@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -126,8 +126,8 @@
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
-          <x>100</x>
-          <y>220</y>
+          <x>90</x>
+          <y>270</y>
           <width>75</width>
           <height>23</height>
          </rect>
@@ -150,7 +150,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>310</y>
+          <y>220</y>
           <width>113</width>
           <height>22</height>
          </rect>
@@ -160,7 +160,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>310</y>
+          <y>230</y>
           <width>56</width>
           <height>16</height>
          </rect>
@@ -199,7 +199,7 @@
         <property name="geometry">
          <rect>
           <x>140</x>
-          <y>260</y>
+          <y>320</y>
           <width>113</width>
           <height>22</height>
          </rect>
@@ -208,8 +208,8 @@
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>260</y>
+          <x>20</x>
+          <y>320</y>
           <width>56</width>
           <height>16</height>
          </rect>
@@ -412,6 +412,29 @@
      <attribute name="title">
       <string>Historique</string>
      </attribute>
+     <widget class="QTableView" name="tableView_2">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>60</y>
+        <width>821</width>
+        <height>371</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>30</y>
+        <width>231</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Historique des Modfications :</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

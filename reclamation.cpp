@@ -17,7 +17,7 @@ Reclamation::Reclamation(int a, QString b,QString c,QString d,QDate e,QString f,
 QSqlQueryModel * Reclamation::afficher()
 {
     QSqlQueryModel *model=new QSqlQueryModel();
-    model->setQuery("SELECT * FROM reclamation");
+    model->setQuery("SELECT * FROM reclamation ORDER by id_rec ASC");
     model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_rec"));
     model->setHeaderData(1,Qt::Horizontal,QObject::tr("catrgorie"));
     model->setHeaderData(2,Qt::Horizontal,QObject::tr("etat"));
@@ -129,4 +129,23 @@ QSqlQueryModel * Reclamation::recherche(QString a)
 
     return model;
 }
-
+bool Reclamation::ajouter_mod(int id,QString a,QDateTime d)
+{
+    QSqlQuery query;
+    QString res = QString::number(id);
+    //QString res1=d.toString();
+    query.prepare("INSERT INTO mod(id_rec,type,date_mod)""VALUES (:id_rec,:type,:date_mod)");
+    query.bindValue(":id_rec",id);
+    query.bindValue(":type",a);
+    query.bindValue(":date_mod",d);
+    return query.exec();
+}
+QSqlQueryModel * Reclamation::afficher_mod()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM mod");
+    model->setHeaderData(0,Qt::Horizontal,QObject::tr("ID Reclamation"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("type"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("Date et Temps"));
+    return model;
+}

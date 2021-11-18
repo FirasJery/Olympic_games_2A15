@@ -12,41 +12,37 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(0);
-     ui->tableView->setModel(rmp.afficher());
+    ui->tableView->setModel(rmp.afficher());
     QSqlQueryModel *model=new QSqlQueryModel();
     model = rmp.afficher();
+    QDate d;
     int count=0;
     for (int i = 0; i < model->rowCount(); i++) {
-        if ((model->data(model->index(i,4)).toDate().addDays(3) < QDate::currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
+        QDate k=model->data(model->index(i,4)).toDate();
+        if ((k.addDays(3) < d.currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
         {
             count++;
         }}
+
+        /*int count=0;
+        QSqlQuery query("SELECT date_a,etat FROM reclamation");
+        while (query.next())
+        {
+            QDate date=query.value(0).toDate();
+            QString etat=query.value(1).toString();
+            if ((date.addDays(3)<QDate::currentDate())&&(etat!="done"))
+            {
+                count++;
+            }
+        }*/
+
+
         if (count != 0){
             QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
             QString res=QString::number(count);
             notifyIcon->show();
             notifyIcon->showMessage("warning ! ","you have "+res+" reclamation not done",QSystemTrayIcon::Information,15000);
         }
-
-
-
-
- /*        QSqlQuery query;
-         QDate current=current.currentDate();
-         int i=0;
-         int nb=0;
-         do
-         {
-             query.exec("SELECT date_a FROM competition WHERE etat!='done'");
-             QDate d=query.value(i).toDate();
-             QDate compare=d.addDays(3);
-             if (current>compare)
-                 nb++;
-          }while (query.next());
-         QString res=QString::number(nb);*/
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -60,24 +56,34 @@ void MainWindow::on_pushButton_clicked()
     QString contenu=ui->line_contenu->text();
     QDate d=ui->date->date();
     QString mail=ui->line_mail->text();
+    int id_j=ui->line_idj->text().toInt();
 
 
 
-    Reclamation R(1,categorie,"just added",contenu,d,mail,1);
+    Reclamation R(1,categorie,"just added",contenu,d,mail,id_j);
 
     bool test=R.ajouter();
     if(test)
     {
         QMessageBox::information(nullptr, QObject::tr("database is open"),
-                    QObject::tr("connection successful.\n"
+                    QObject::tr("ajout successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
         ui->tableView->setModel(rmp.afficher());
+        QSqlQueryModel *model=new QSqlQueryModel();
+        model = rmp.afficher();
+        int id = model->data(model->index(model->rowCount()-1,0)).toInt();
+        test=R.ajouter_mod(id,"ajout",QDateTime::currentDateTime());
 
 }
     else
        { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                    QObject::tr("connection failed.\n"
+                    QObject::tr("ajout failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel); }
+
+
+
+
+
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -95,16 +101,16 @@ void MainWindow::on_pushButton_2_clicked()
     if(i)
     {
         QMessageBox::information(nullptr, QObject::tr("database is open"),
-                    QObject::tr("connection successful.\n"
+                    QObject::tr("delete successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
         ui->tableView->setModel(rmp.afficher());
+        bool test=rmp.ajouter_mod(id_del,"suppression",QDateTime::currentDateTime());
 
-}
+    }
     else
        { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                    QObject::tr("connection failed.\n"
+                    QObject::tr("delete failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel); }
-
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -124,17 +130,17 @@ void MainWindow::on_pushButton_4_clicked()
     if(test)
     {
         QMessageBox::information(nullptr, QObject::tr("database is open"),
-                    QObject::tr("connection successful.\n"
+                    QObject::tr("update successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
         ui->tableView->setModel(rmp.afficher());
+        test=R.ajouter_mod(id_upt,"modification",QDateTime::currentDateTime());
 
-}
+    }
     else
        { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                    QObject::tr("connection failed.\n"
+                    QObject::tr("update failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel); }
 }
-
 void MainWindow::on_pushButton_5_clicked()
 {
     QString cls;
@@ -169,7 +175,7 @@ void MainWindow::on_pushButton_6_clicked()
     smtp->sendMail("firas_test",ui->a_mail->text(),ui->objet_mail->text(),msg);
 
     QMessageBox::information(nullptr, QObject::tr("SENT"),
-                             QObject::tr("Email Sended Successfully.\n"
+                             QObject::tr("Email Sent Successfully.\n"
                                          "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
@@ -184,4 +190,10 @@ void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
         ui->a_mail->setText(index.data().toString());
     }
 
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if(index==2)
+         ui->tableView_2->setModel(rmp.afficher_mod());
 }

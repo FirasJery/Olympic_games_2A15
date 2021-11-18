@@ -42,6 +42,8 @@ public:
     QSqlQueryModel * TriEtat(QString cls);
     QSqlQueryModel * TriDate(QString cls);
     QSqlQueryModel * recherche(QString cls);
+    bool ajouter_mod(int,QString,QDateTime);
+    QSqlQueryModel * afficher_mod();
 
 
 
