@@ -93,3 +93,104 @@ QSqlQueryModel* joueur::triage()
    return model;
 
 }
+
+QSqlQueryModel* joueur::triNationallite()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from JOUEUR order by NATIONALLITE");
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
+}
+
+
+QSqlQueryModel* joueur::cherche_nom(QString nom)
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from joueur where NOM ='"+nom+"'");
+
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
+}
+
+
+QSqlQueryModel* joueur::cherche_id(int id)
+{
+    QString res=QString ::number(id);
+
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from joueur where ID_JOUEUR ='"+res+"'");
+
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
+}
+
+
+
+QSqlQueryModel* joueur::cherche_num(int num)
+{
+    QString res=QString ::number(num);
+
+    QSqlQueryModel *model=new QSqlQueryModel();
+            model->setQuery("select * from joueur where NUMERO ='"+res+"'");
+
+            model->setHeaderData(0,Qt::Horizontal,QObject::tr("id"));
+            model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+            model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+            model->setHeaderData(3,Qt::Horizontal,QObject::tr("age"));
+            model->setHeaderData(4,Qt::Horizontal,QObject::tr("nationallite"));
+            model->setHeaderData(5,Qt::Horizontal,QObject::tr("num"));
+
+   return model;
+
+}
+bool joueur ::affecter(int id,int id_competition)
+{
+    QSqlQuery query;
+    QString res = QString :: number(id);
+    QString resc = QString :: number(id_competition);
+    query.prepare("insert into PARTICIPER(ID_JOUEUR,CODE_COMPETITION)values(:id,:competition)");
+    //
+
+    query.bindValue(":competition",resc);
+    query.bindValue(":id",res);
+
+
+
+    return query.exec();
+}
+void joueur::statistique(QVector<double>* ticks,QVector<QString> *labels)
+{
+    QSqlQuery q;
+    int i=0;
+    q.exec("select NOM from JOUEUR");
+    while (q.next())
+    {
+        QString identifiant = q.value(0).toString();
+        i++;
+        *ticks<<i;
+        *labels <<identifiant;
+    }
+}
+
+

@@ -34,10 +34,17 @@ QString nationallite;
     //
     bool ajouter();
     QSqlQueryModel * afficher();
-    bool supprimer (int id);
-    bool modifier(int id);
+    bool supprimer (int );
+    bool modifier(int );
     QSqlQueryModel *tri();
     QSqlQueryModel *triage();
+    QSqlQueryModel *triNationallite();
+    QSqlQueryModel *cherche_nom(QString );
+    QSqlQueryModel *cherche_id(int );
+    QSqlQueryModel  *cherche_num(int ) ;
+    bool affecter(int,int);
+    void statistique(QVector<double>* ticks,QVector<QString> *labels);
+
 
 };
 
