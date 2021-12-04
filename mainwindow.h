@@ -42,6 +42,8 @@ private slots:
 
     void on_export_2_clicked();
 
+    void on_pushconnect_clicked();
+
 private:
     Ui::MainWindow *ui;
    joueur ptmp;

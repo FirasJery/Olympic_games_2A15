@@ -313,3 +313,8 @@ void MainWindow::on_export_2_clicked()
      obj.export2Excel();
 
 }
+
+void MainWindow::on_pushconnect_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}

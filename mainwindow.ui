@@ -31,7 +31,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QTabWidget" name="tabWidget">
@@ -48,7 +48,7 @@
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>Gestion des Joueurs</string>
        </attribute>
        <widget class="QPushButton" name="tri_id">
         <property name="geometry">
@@ -472,7 +472,7 @@ background-color: rgb(255, 237, 252);</string>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Statistiques</string>
        </attribute>
        <widget class="QCustomPlot" name="plot" native="true">
         <property name="geometry">
