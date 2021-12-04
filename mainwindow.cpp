@@ -310,7 +310,7 @@ void MainWindow::on_export_2_clicked()
     obj.addField(3, tr("AGE"), "int");
     obj.addField(4, tr("NATIONALLITE"), "char(20)");
     obj.addField(5, tr("NUMERO"), "int");
-     obj.export2Excel();
+    obj.export2Excel();
 
 }
 
