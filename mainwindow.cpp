@@ -318,3 +318,177 @@ void MainWindow::on_pushconnect_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
+
+void MainWindow::on_pushButtonmodif_clicked()
+{
+    int id = ui->lineidg->text().toInt();
+        QString nom= ui->linenomg->text();
+        int budget = ui->linebudgetg->text().toInt();
+        QString type;
+        if (budget >= 10000)
+         type= "Gold";
+        else type ="Normal";
+        int etat = ui->lineetatg->text().toInt();
+        int codec = ui->linecompg->text().toInt();
+        SPONSORS S(id,nom,type,codec,budget,etat);
+        bool test=S.Modifier(id);
+        if(test)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("modif successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("modif failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);}
+        ui->tableViewg->setModel(Stmp.Afficher());
+
+}
+
+void MainWindow::on_pushButtonajout_clicked()
+{
+    bool test;
+        int id = ui->lineidg->text().toInt();
+        QString nom= ui->linenomg->text();
+        int budget = ui->linebudgetg->text().toInt();
+        QString type;
+        if (budget >= 10000)
+         type= "Gold";
+        else type ="Normal";
+        int etat = ui->lineetatg->text().toInt();
+        int codec = ui->linecompg->text().toInt();
+        SPONSORS S(id,nom,type,codec,budget,etat);
+        test=S.Ajouter();
+        if(test)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("ajout successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("ajout failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);}
+        ui->tableViewg->setModel(Stmp.Afficher());
+
+}
+
+void MainWindow::on_pushButtonsupp_clicked()
+{
+    int id = ui->lineidg->text().toInt();
+        bool test=Stmp.Supprimer(id);
+        if(test)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("supp successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+
+    }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("supp failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);}
+        ui->tableViewg->setModel(Stmp.Afficher());
+}
+
+void MainWindow::on_push_trig_clicked()
+{
+    QString tst;
+           if (ui->radioButtong->isChecked()) tst="ASC";
+           else if (ui->radioButton2g->isChecked()) tst="DESC";
+
+           switch (ui->comboBox->currentIndex()) {
+           case 0:
+               ui->tableViewg->setModel(Stmp.Triparnom(tst));
+               break;
+           case 1:
+               ui->tableViewg->setModel(Stmp.TriEtat(tst));
+               break;
+           case 2:
+               ui->tableViewg->setModel(Stmp.TriBudget(tst));
+               break;
+           }
+}
+
+
+void MainWindow::on_push_exportg_clicked()
+{
+    bool test =Stmp.Export(ui->lineexportg->text());
+
+        if (test)
+            {
+                QMessageBox::information(nullptr, QObject::tr("Succés"), QObject::tr("Export effectué\n""Click Ok to exit."), QMessageBox::Ok);
+            }
+            else QMessageBox::warning(nullptr, QObject::tr("Erreur"),QObject::tr("Export non effectué. \n""Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+
+void MainWindow::on_push_alerteg_clicked()
+{
+    if (Stmp.alerte()>0)
+                {
+                    QString notif=QString::number(Stmp.alerte())+" Frais non encore deposés.\n""Click Ok to exit.";
+                    QMessageBox::warning(nullptr, QObject::tr("Alerte"),notif, QMessageBox::Ok);
+                }
+        else QMessageBox::information(nullptr, QObject::tr("OK"), QObject::tr("Tous les frais sont deposés\n""Click Ok to exit."), QMessageBox::Ok);
+}
+
+void MainWindow::on_push_impressiong_clicked()
+{
+    QString strStream;
+                        QTextStream out(&strStream);
+
+                        const int rowCount = ui->tableViewg->model()->rowCount();
+                        const int columnCount = ui->tableViewg->model()->columnCount();
+                        QString TT = QDate::currentDate().toString("dd/MM/yyyy");
+                        out <<"<html>\n"
+                              "<head>\n"
+                               "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                            << "<title>SPONSORS<title>\n "
+                            << "</head>\n"
+                            "<body bgcolor=#ffffff link=#5000A0>\n"
+                            "<h1 style=\"text-align: center;\"><strong>  SPONSORS  "+TT+"</strong></h1>"
+                            "<table style=\"text-align: center; font-size: 20px;\" border=1>\n "
+                              "</br> </br>";
+
+                        out << "<thead><tr bgcolor=#d6e5ff>";
+                        for (int column = 0; column < columnCount; column++)
+                            if (!ui->tableViewg->isColumnHidden(column))
+                                out << QString("<th>%1</th>").arg(ui->tableViewg->model()->headerData(column, Qt::Horizontal).toString());
+                        out << "</tr></thead>\n";
+
+
+                        for (int row = 0; row < rowCount; row++) {
+                            out << "<tr>";
+                            for (int column = 0; column < columnCount; column++) {
+                                if (!ui->tableViewg->isColumnHidden(column)) {
+                                    QString data =ui->tableViewg->model()->data(ui->tableViewg->model()->index(row, column)).toString().simplified();
+                                    out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                                }
+                            }
+                            out << "</tr>\n";
+                        }
+                        out <<  "</table>\n"
+                            "</body>\n"
+                            "</html>\n";
+
+                        QTextDocument *document = new QTextDocument();
+                        document->setHtml(strStream);
+
+                        QPrinter printer;
+
+                        QPrintDialog *test = new QPrintDialog(&printer, NULL);
+                        if (test->exec() == QDialog::Accepted) {
+                            document->print(&printer);
+                        }
+
+                        delete document;
+}
+
+void MainWindow::on_linerechg_textChanged(const QString &arg1)
+{
+    ui->tableViewg->setModel(Stmp.recherche(arg1));
+}

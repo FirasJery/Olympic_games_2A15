@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,14 +30,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    sponsors.cpp
 
 HEADERS += \
     exportexcelobject.h \
     joueur.h \
         mainwindow.h \
     connection.h \
-    qcustomplot.h
+    qcustomplot.h \
+    sponsors.h
 
 FORMS += \
         mainwindow.ui
