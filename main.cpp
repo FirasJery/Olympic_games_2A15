@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include "connection.h"
 #include "joueur.h"
+#include "reclamation.h"
+#include <QFile>
 
 int main(int argc, char *argv[])
 {

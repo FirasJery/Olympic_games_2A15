@@ -1,6 +1,5 @@
 #ifndef EXPORTEXCELOBJECT_H
 #define EXPORTEXCELOBJECT_H
-
 #include <QObject>
 #include <QTableView>
 #include <QStringList>

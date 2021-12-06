@@ -3,6 +3,8 @@
 #include "joueur.h"
 #include "sponsors.h"
 #include <QMainWindow>
+#include "reclamation.h"
+#include "smtp.h"
 
 namespace Ui {
 class MainWindow;
@@ -61,10 +63,32 @@ private slots:
 
     void on_linerechg_textChanged(const QString &arg1);
 
+    void on_push_ajoutf_clicked();
+
+    void on_push_modifierf_clicked();
+
+    void on_push_afficherf_clicked();
+
+    void on_push_supprimerf_clicked();
+
+    void on_pushtrif_clicked();
+
+    void on_line_rechf_textChanged(const QString &arg1);
+
+    void on_push_sendf_clicked();
+
+    void on_tableViewf_doubleClicked(const QModelIndex &index);
+
+    void on_tabWidgetf_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
    joueur ptmp;
    SPONSORS Stmp;
+   Reclamation rmp;
+   Smtp* smtp;
+   QString msg;
+   QString mail;
 };
 
 #endif // MAINWINDOW_H

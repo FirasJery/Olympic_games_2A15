@@ -7,19 +7,35 @@
 #include <joueur.h>
 #include "exportexcelobject.h"
 #include <QIntValidator>
+#include "reclamation.h"
+#include <QSystemTrayIcon>
+
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-    ui->tableView->setModel(ptmp.afficher());
-    //controle saisir
-    ui->id->setValidator(new QIntValidator(1,99,this));
-    ui->num->setValidator(new QIntValidator(10000000,99999999,this));
-    QSqlQueryModel *modell=new QSqlQueryModel();
-            modell->setQuery("select NOM from COMPETITIONS order by NOM");
-    ui->comboBox->setModel(modell);
+  ui->stackedWidget->setCurrentIndex(0);// use this to change the page in the stacked widget
 
+//partierania
+  ui->tableView->setModel(ptmp.afficher());
+  //controle saisir
+  ui->id->setValidator(new QIntValidator(1,99,this));
+  ui->num->setValidator(new QIntValidator(10000000,99999999,this));
+  QSqlQueryModel *modell=new QSqlQueryModel();
+  modell->setQuery("select NOM from COMPETITIONS order by NOM");
+  ui->comboBox->setModel(modell);
+  /////////////////////////////////////////////////////////////////////////
+
+//partie ghassen
+    ui->tableViewg->setModel(Stmp.Afficher());
+    ///////////////////////////////////////////////////////////////
+
+//partie firas
+    ui->tabWidgetf->setCurrentIndex(0);
+    ui->tableViewf->setModel(rmp.afficher());
+
+///////////////////////////////////////////////////////////////
 
 
 
@@ -29,6 +45,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+////////////////////////////////////////////////////////////////rania
 void MainWindow::on_pushButton_clicked()
 {
     int id=ui->id->text().toInt();
@@ -150,13 +167,6 @@ void MainWindow::on_pushButton_7_clicked()
       ui->tableView->setModel(ptmp.cherche_nom(nom));
       }
 }
-
-
-
-
-
-
-
 
 void MainWindow::on_chercher_id_clicked()
 {
@@ -313,12 +323,30 @@ void MainWindow::on_export_2_clicked()
     obj.export2Excel();
 
 }
-
+/////////////////////////////////////////////////////////////////////////////stackedwidget
 void MainWindow::on_pushconnect_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(3);
+    if(ui->stackedWidget->currentIndex()==3){
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model = rmp.afficher();
+    QDate d;
+    int count=0;
+    for (int i = 0; i < model->rowCount(); i++) {
+        QDate k=model->data(model->index(i,4)).toDate();
+        if ((k.addDays(3) < d.currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
+        {
+            count++;
+        }
+    }
+        if (count != 0){
+            QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
+            QString res=QString::number(count);
+            notifyIcon->show();
+            notifyIcon->showMessage("warning ! ","you have "+res+" reclamation not done",QSystemTrayIcon::Information,15000);
+        }}
 }
-
+/////////////////////////////////////////////////////////////////////////////ghassen
 void MainWindow::on_pushButtonmodif_clicked()
 {
     int id = ui->lineidg->text().toInt();
@@ -492,3 +520,143 @@ void MainWindow::on_linerechg_textChanged(const QString &arg1)
 {
     ui->tableViewg->setModel(Stmp.recherche(arg1));
 }
+/////////////////////////////////////////////////////////////////////////firas
+void MainWindow::on_push_ajoutf_clicked()
+{
+        QString categorie=ui->line_categorief->text();
+        QString contenu=ui->line_contenuf->text();
+        QDate d=ui->datef->date();
+        QString mail=ui->line_mailf->text();
+        int id_j=ui->line_idjf->text().toInt();
+
+
+
+        Reclamation R(1,categorie,"just added",contenu,d,mail,id_j);
+
+        bool test=R.ajouter();
+        if(test)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("ajout successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+            ui->tableView->setModel(rmp.afficher());
+            QSqlQueryModel *model=new QSqlQueryModel();
+            model = rmp.afficher();
+            int id = model->data(model->index(model->rowCount()-1,0)).toInt();
+            test=R.ajouter_mod(id,"ajout",QDateTime::currentDateTime());
+
+    }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("ajout failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel); }
+}
+
+void MainWindow::on_push_modifierf_clicked()
+{
+    int id_upt=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+        QString categorie=ui->line_categorief->text();
+        QString contenu=ui->line_contenuf->text();
+        QString etat=ui->line_etatf->text();
+        QDate d=ui->datef->date();
+        QString mail=ui->line_mailf->text();
+        int id_j=ui->line_idjf->text().toInt();
+        Reclamation R(id_upt,categorie,etat,contenu,d,mail,id_j);
+
+
+
+        bool test=R.modifier(id_upt);
+        if(test)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("update successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+            ui->tableView->setModel(rmp.afficher());
+            test=R.ajouter_mod(id_upt,"modification",QDateTime::currentDateTime());
+
+        }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("update failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel); }
+}
+
+void MainWindow::on_push_afficherf_clicked()
+{
+    ui->tableView->setModel(rmp.afficher());
+}
+
+void MainWindow::on_push_supprimerf_clicked()
+{
+    bool i;
+        int id_del;
+        id_del=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+
+        i=rmp.supprimer(id_del);
+        if(i)
+        {
+            QMessageBox::information(nullptr, QObject::tr("database is open"),
+                        QObject::tr("delete successful.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+            ui->tableView->setModel(rmp.afficher());
+            rmp.ajouter_mod(id_del,"suppression",QDateTime::currentDateTime());
+
+        }
+        else
+           { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                        QObject::tr("delete failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel); }
+}
+
+void MainWindow::on_pushtrif_clicked()
+{
+    QString cls;
+        if (ui->radio_trif->isChecked()) cls="ASC";
+        else if (ui->radio_trif2->isChecked()) cls="DESC";
+
+        switch (ui->comboBox->currentIndex()) {
+        case 0:
+            ui->tableView->setModel(rmp.TriCategorie(cls));
+            break;
+        case 1:
+            ui->tableView->setModel(rmp.TriDate(cls));
+            break;
+        case 2:
+            ui->tableView->setModel(rmp.TriEtat(cls));
+            break;
+        }
+}
+
+void MainWindow::on_line_rechf_textChanged(const QString &arg1)
+{
+    ui->tableView->setModel(rmp.recherche(arg1));
+}
+
+void MainWindow::on_push_sendf_clicked()
+{
+    smtp = new Smtp("gestion.recs@gmail.com" , "gestiongestion", "smtp.gmail.com",465);
+        connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+        msg=ui->message_mailf->toPlainText();
+
+        smtp->sendMail("firas_test",ui->a_mailf->text(),ui->objet_mailf->text(),msg);
+
+        QMessageBox::information(nullptr, QObject::tr("SENT"),
+                                 QObject::tr("Email Sent Successfully.\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_tableViewf_doubleClicked(const QModelIndex &index)
+{
+    if (index.data().toString() == ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),5)).toString()){
+           ui->tabWidget->setCurrentIndex(1);
+           ui->a_mailf->setText(index.data().toString());
+       }
+}
+
+void MainWindow::on_tabWidgetf_currentChanged(int index)
+{
+    if(index==2)
+            ui->tableView_historiquef->setModel(rmp.afficher_mod());
+}
+///////////////////////////////////////////////////////////////////////////////
