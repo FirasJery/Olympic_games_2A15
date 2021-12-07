@@ -2,21 +2,17 @@
 #include <QApplication>
 #include <QMessageBox>
 #include "connection.h"
-#include "joueur.h"
-#include "reclamation.h"
-#include <QFile>
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Connection c;
+    MainWindow w;
+    connection c;
     bool test=c.createconnect();
-        MainWindow w;
     if(test)
     {w.show();
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
-                                "Click Cancel to exit."), QMessageBox::Cancel);
+                                "jwk bh "), QMessageBox::Information);
 
 }
     else
