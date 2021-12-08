@@ -1,5 +1,6 @@
 #include "joueur.h"
 #include <QMessageBox>
+#include <QtDebug>
 joueur::joueur(){}
 joueur::joueur(QString nom ,QString prenom,QString nationallite, int id ,int num, int age )
 {
@@ -192,5 +193,30 @@ void joueur::statistique(QVector<double>* ticks,QVector<QString> *labels)
         *labels <<identifiant;
     }
 }
+int joueur::ard(QString DataAsString)
+{
+   int max=5;
+    QString res;
+   //    if(res.length()<max&&DataAsString!=NULL)
 
+            res+=DataAsString;
+            qInfo() << res;
 
+       QSqlQuery q;
+       if(res.length()==max){
+                   q.exec("select NOM from JOUEUR where NUMERO ='"+res+"'");
+                   while(q.next()){
+
+                      nom = q.value(0).toString();
+                      // qInfo() << nom;
+                   }
+                   if(nom!=NULL)
+                   {
+                       return 1;
+
+                   }else{
+                       return 0;
+                   }
+       }
+       return 3;
+}

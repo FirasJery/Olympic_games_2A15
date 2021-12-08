@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "joueur.h"
+#include "arduino.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -43,10 +44,13 @@ private slots:
     void on_export_2_clicked();
 
     void on_pushconnect_clicked();
+    void update_label();
 
 private:
     Ui::MainWindow *ui;
    joueur ptmp;
+   QByteArray data;
+   Arduino A;
 };
 
 #endif // MAINWINDOW_H

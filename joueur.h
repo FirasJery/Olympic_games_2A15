@@ -33,6 +33,7 @@ QString nationallite;
     void setnationallite(QString na){nationallite=na;}
     //
     bool ajouter();
+ int ard(QString DataAsString);
     QSqlQueryModel * afficher();
     bool supprimer (int );
     bool modifier(int );

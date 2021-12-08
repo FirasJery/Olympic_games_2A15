@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    arduino.cpp \
     exportexcelobject.cpp \
     joueur.cpp \
         main.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     qcustomplot.cpp
 
 HEADERS += \
+    arduino.h \
     exportexcelobject.h \
     joueur.h \
         mainwindow.h \

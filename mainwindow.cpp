@@ -7,6 +7,7 @@
 #include <joueur.h>
 #include "exportexcelobject.h"
 #include <QIntValidator>
+#include <QString>
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -19,8 +20,17 @@ MainWindow::MainWindow(QWidget *parent)
     QSqlQueryModel *modell=new QSqlQueryModel();
             modell->setQuery("select NOM from COMPETITIONS order by NOM");
     ui->comboBox->setModel(modell);
-
-
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
+QString *res;
 
 
 }
@@ -310,11 +320,27 @@ void MainWindow::on_export_2_clicked()
     obj.addField(3, tr("AGE"), "int");
     obj.addField(4, tr("NATIONALLITE"), "char(20)");
     obj.addField(5, tr("NUMERO"), "int");
-     obj.export2Excel();
+    obj.export2Excel();
 
 }
 
 void MainWindow::on_pushconnect_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+}
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+QString DataAsString = QString(data);
+                qInfo() << DataAsString;
+
+
+
+if(DataAsString=="5")
+{
+                A.write_to_arduino("1");
+            }else{
+                A.write_to_arduino("0");
+            }
+
 }
