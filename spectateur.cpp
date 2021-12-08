@@ -1,3 +1,4 @@
+
 #include "spectateur.h"
 #include <QString>
 #include <QSqlQuery>
@@ -182,17 +183,72 @@ QSqlQueryModel* Spectateur::recherche_nbr_ticket(int nbr_ticket)
 
 }
 
-void Spectateur::statistique(QVector<double>* ticks,QVector<QString> *labels)
+void Spectateur::statistique(QVector<double>* PlaceData)
 {
     QSqlQuery q;
     int i=0;
-    q.exec("select nbr_ticket from spectateur");
+    q.exec("select Age from spectateur");
     while (q.next())
     {
-        QString identifiant = q.value(0).toString();
-        i++;
-        *ticks<<i;
-        *labels <<identifiant;
+        if(q.value(0).toInt()>15)
+            i++;
     }
+    *PlaceData<< i;
 }
+void Spectateur::statistique_1(QVector<double>* PlaceData)
+{
+    QSqlQuery q;
+    int i=0;
+    q.exec("select Age from spectateur");
+    while (q.next())
+    {
+        if((q.value(0).toInt())>15&&(q.value(0).toInt()<25))
+            i++;
+    }
+    *PlaceData<< i;
+}
+void Spectateur::statistique_2(QVector<double>* PlaceData)
+{
+    QSqlQuery q;
+    int i=0;
+    q.exec("select Age from spectateur");
+    while (q.next())
+    {
+        if((q.value(0).toInt())>25&&(q.value(0).toInt()<35))
+            i++;
+    }
+    *PlaceData<< i;
+}
+void Spectateur::statistique_3(QVector<double>* PlaceData)
+{
+    QSqlQuery q;
+    int i=0;
+    q.exec("select Age from spectateur");
+    while (q.next())
+    {
+        if((q.value(0).toInt())>35&&(q.value(0).toInt()<45))
+            i++;
+    }
+    *PlaceData<< i;
+}
+void Spectateur::statistique_4(QVector<double>* PlaceData)
+{
+    QSqlQuery q;
+    int i=0;
+    q.exec("select Age from spectateur");
+    while (q.next())
+    {
+        if(q.value(0).toInt()>45)
+            i++;
+    }
+    *PlaceData<< i;
+}
+
+
+
+
+
+
+
+
 

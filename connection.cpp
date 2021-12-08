@@ -5,7 +5,7 @@ Connection::Connection()
 
 }
 
-bool Connection::createconnect()
+bool Connection::createconnection()
 {bool test=false;
 QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
 db.setDatabaseName("test-bd");
@@ -21,3 +21,4 @@ test=true;
 
     return  test;
 }
+void Connection::closeConnection(){db.close();}

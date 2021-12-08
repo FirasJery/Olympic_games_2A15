@@ -1,10 +1,11 @@
 #ifndef SPECTATEUR_H
 #define SPECTATEUR_H
 #include <QString>
-#include<QSqlQueryModel>
+#include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QDebug>
-#include<qsqlquerymodel.h>
+#include <qsqlquerymodel.h>
+#include<vector>
 
 class Spectateur
 {
@@ -32,12 +33,16 @@ public:
     bool supprimer(int);
     bool modifier();
     QSqlQueryModel *trinom();
-      QSqlQueryModel *triage();
-      QSqlQueryModel *trinbrticket();
+    QSqlQueryModel *triage();
+    QSqlQueryModel *trinbrticket();
     QSqlQueryModel *recherche_ID(int id);
-   QSqlQueryModel *recherche_age(int age);
-     QSqlQueryModel *recherche_nbr_ticket(int nbr_ticket);
-     void statistique(QVector<double>* ticks,QVector<QString> *labels);
+    QSqlQueryModel *recherche_age(int age);
+    QSqlQueryModel *recherche_nbr_ticket(int nbr_ticket);
+     void statistique(QVector<double>* ticks);
+     void statistique_1(QVector<double>* PlaceData);
+     void statistique_2(QVector<double>* PlaceData);
+     void statistique_3(QVector<double>* PlaceData);
+     void statistique_4(QVector<double>* PlaceData);
 private:
 
     int id,age,nbr_ticket;

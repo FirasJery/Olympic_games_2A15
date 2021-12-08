@@ -29,16 +29,14 @@ SOURCES += \
     connection.cpp \
     qcustomplot.cpp \
     smtp.cpp \
-    spectateur.cpp \
-    spectateurfidele.cpp
+    spectateur.cpp
 
 HEADERS += \
         mainwindow.h \
     connection.h \
     qcustomplot.h \
     smtp.h \
-    spectateur.h \
-    spectateurfidele.h
+    spectateur.h
 
 FORMS += \
         mainwindow.ui

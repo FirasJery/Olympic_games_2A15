@@ -3,6 +3,8 @@
 #include "spectateur.h"
 #include <QMainWindow>
 #include <smtp.h>
+#include <QtWidgets/QMessageBox>
+
 
 namespace Ui {
 class MainWindow;
@@ -26,10 +28,11 @@ private slots:
     void on_pb_recherche_ID_clicked();
     void on_pb_recherche_age_clicked();
     void on_pb_recherche_nbr_ticket_clicked();
+    void on_pb_mail_clicked();
     void on_tabWidget_currentChanged(int index);
 
 
-    void on_pb_mail_clicked();
+
 
 private:
     Ui::MainWindow *ui;
