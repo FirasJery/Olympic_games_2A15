@@ -13,8 +13,8 @@ public:
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int) ;
-
     bool modifier(QString, QString, QString, QString, QDate,QDate,QString);
+    QSqlQueryModel * recherche(QString a);
     ~competition (){}
 };
 #endif // DOSSIER_MEDICAL_H

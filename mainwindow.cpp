@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList list=(QStringList()<<"course"<<"saut"<<"natation");
     ui->comboBox->addItems(list);
     ui->tableView->setModel(ajtmp.afficher());
-        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+   // ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 }
 
@@ -106,44 +106,48 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 void MainWindow::on_pushButton_3_clicked()
 {
     QMessageBox msgBox ;
-       QSqlQueryModel *model = new QSqlQueryModel();
-             model->setQuery("select * from COMPETITIONS order by NOM ASC");
-             model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
-             model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
-             model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
-             model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
-             model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
-             model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
-             model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+    QSqlQueryModel *model = new QSqlQueryModel();
+
+
+             switch (ui->comboBox_2->currentIndex()) {
+             case 0:
+                 model->setQuery("select * from COMPETITIONS order by NOM ASC");
+                 model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                 model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                 model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                 model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                 model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                 model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                 model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                 break;
+             case 1:
+                 model->setQuery("select * from COMPETITIONS order by CODE_COMPETITION ASC");
+                 model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                 model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                 model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                 model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                 model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                 model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                 model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                 break;
+             case 2:
+                 model->setQuery("select * from COMPETITIONS order by DATE_DE ASC");
+                 model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                 model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                 model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                 model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                 model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                 model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                 model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                 break;
+             }
              ui->tableView->setModel(model);
              ui->tableView->show();
              msgBox.setText("Tri avec succés.");
              msgBox.exec();
 }
 
-void MainWindow::on_pushButton_4_clicked()
-{
-    QMessageBox msgBox ;
-        QSqlQueryModel *model = new QSqlQueryModel();
-        QString reff;
-        reff = ui->rech->text();
-        model->setQuery("Select * from COMPETITIONS where NOM = '"+reff+"' ");
-        model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
-        model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
-        model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
-        model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
-        model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
-        model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
-        model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
-        ui->tableView->setModel(model);
-        ui->tableView->show();
-        msgBox.setText(" trouvé.");
-        msgBox.exec();
-        ui->rech->clear();
 
-
-
-}
 
 void MainWindow::on_pushButton_5_clicked()
 {
@@ -186,7 +190,7 @@ void MainWindow::PrintWidget(QWidget* widget) {
   printer.setOrientation(QPrinter::Landscape);
   printer.setOutputFormat(QPrinter::PdfFormat);
   printer.setPaperSize(QPrinter::A4);
-  printer.setOutputFileName("C:/Users/Mariem kamputere/test.pdf"); // will be in build folder
+  printer.setOutputFileName("C:/Users/Firas/Desktop/myfile.pdf"); // will be in build folder
 
   painter.begin(&printer);
   double xscale = printer.pageRect().width() / double(pix.width());
@@ -208,6 +212,25 @@ doc.drawContents(&painter);
 
 
 void MainWindow::on_pushButton_6_clicked()
-{PrintWidget(ui->tableView) ;
+{
+    PrintWidget(ui->tableView) ;
+}
 
+void MainWindow::on_rech_textChanged(const QString &arg1)
+{
+     ui->tableView->setModel(ajtmp.recherche(arg1));
+}
+
+void MainWindow::on_pushsendO_clicked()
+{
+    smtpo = new Smtp("gestion.recs@gmail.com" , "gestiongestion", "smtp.gmail.com",465);
+    connect(smtpo, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+    msgo=ui->plainO->toPlainText();
+
+    smtpo->sendMail("firas_test",ui->mailO->text(),ui->objetO->text(),msgo);
+
+    QMessageBox::information(nullptr, QObject::tr("SENT"),
+                             QObject::tr("Email Sent Successfully.\n"
+                                         "Click Cancel to exit."), QMessageBox::Cancel);
 }

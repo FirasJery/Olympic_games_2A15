@@ -5,6 +5,7 @@ QT += sql
 QT += core
 QT += printsupport
 QT += gui
+QT += network
 
 
 CONFIG += c++11
@@ -24,12 +25,14 @@ SOURCES += \
     competition.cpp \
     connection.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    smtp.cpp
 
 HEADERS += \
     competition.h \
     connection.h \
-    mainwindow.h
+    mainwindow.h \
+    smtp.h
 
 FORMS += \
     mainwindow.ui

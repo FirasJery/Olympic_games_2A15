@@ -2,11 +2,17 @@
 #include<QtSql/QSqlQuery>
 #include<QVariant>
 #include <QtSql/QSqlQueryModel>
+
 competition::competition()
-{nom="";lieu="";desc=""; type="" ; }
+{
+    nom="";lieu="";desc=""; type="" ;
+}
+
 competition::competition(QString nom , QString lieu , QString desc , QString type , QDate date_d , QDate date_f)
 {
-  this->nom=nom;this->lieu=lieu;this->desc=desc;this->type=type;this->date_d=date_d;this->date_f=date_f;}
+    this->nom=nom;this->lieu=lieu;this->desc=desc;this->type=type;this->date_d=date_d;this->date_f=date_f;
+}
+
 bool competition::ajouter()
 {
     QSqlQuery query;
@@ -50,7 +56,21 @@ bool competition::modifier(QString nom, QString lieu, QString desc, QString type
           return query.exec();
 }
 
+QSqlQueryModel * competition::recherche(QString a)
+{
 
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM competitions WHERE ( CODE_COMPETITION LIKE '%"+a+"%' OR NOM LIKE '%"+a+"%' OR DATE_DE LIKE '%"+a+"%' ) ");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+
+    return model;
+}
 
 
 
