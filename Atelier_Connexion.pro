@@ -33,6 +33,7 @@ SOURCES += \
     qcustomplot.cpp \
     reclamation.cpp \
     smtp.cpp \
+    spectateur.cpp \
     sponsors.cpp
 
 HEADERS += \
@@ -43,6 +44,7 @@ HEADERS += \
     qcustomplot.h \
     reclamation.h \
     smtp.h \
+    spectateur.h \
     sponsors.h
 
 FORMS += \

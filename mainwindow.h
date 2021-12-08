@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include "reclamation.h"
 #include "smtp.h"
+#include <QtWidgets/QMessageBox>
+#include "spectateur.h"
 
 namespace Ui {
 class MainWindow;
@@ -81,6 +83,30 @@ private slots:
 
     void on_tabWidgetf_currentChanged(int index);
 
+    void on_pb_ajouter_clicked();
+
+    void on_pb_supprimer_clicked();
+
+    void on_pb_modifier_clicked();
+
+    void on_pb_tri_ID_clicked();
+
+    void on_pb_tri_AGE_clicked();
+
+    void on_pb_tri_nbr_ticket_clicked();
+
+    void on_pb_recherche_ID_clicked();
+
+    void on_pb_recherche_age_clicked();
+
+    void on_pb_recherche_nbr_ticket_clicked();
+
+    void on_pb_mail_clicked();
+
+    void on_tabWidget_i_currentChanged(int index);
+
+    void on_pb_spectateurfidele_clicked();
+
 private:
     Ui::MainWindow *ui;
    joueur ptmp;
@@ -89,6 +115,7 @@ private:
    Smtp* smtp;
    QString msg;
    QString mail;
+   Spectateur S;
 };
 
 #endif // MAINWINDOW_H
