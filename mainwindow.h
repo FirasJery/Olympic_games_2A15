@@ -7,6 +7,7 @@
 #include "smtp.h"
 #include <QtWidgets/QMessageBox>
 #include "spectateur.h"
+#include "reportage.h"
 
 namespace Ui {
 class MainWindow;
@@ -107,6 +108,20 @@ private slots:
 
     void on_pb_spectateurfidele_clicked();
 
+    void on_pb_ajouterReportage_clicked();
+
+    void on_pushButton_modifierReportage_clicked();
+
+    void on_pushButton_suppReportage_clicked();
+
+    void on_pushButton_pdfReportage_clicked();
+
+    void on_lineEdit_rechReportage_textChanged(const QString &arg1);
+
+    void on_pushButton_trierReportage_clicked();
+
+    void on_supp_tout_clicked();
+
 private:
     Ui::MainWindow *ui;
    joueur ptmp;
@@ -116,6 +131,7 @@ private:
    QString msg;
    QString mail;
    Spectateur S;
+   Reportage R;
 };
 
 #endif // MAINWINDOW_H

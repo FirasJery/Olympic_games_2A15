@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql network
+QT       += core gui sql network charts
+QT       += printsupport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,6 +34,7 @@ SOURCES += \
     connection.cpp \
     qcustomplot.cpp \
     reclamation.cpp \
+    reportage.cpp \
     smtp.cpp \
     spectateur.cpp \
     sponsors.cpp
@@ -43,6 +46,7 @@ HEADERS += \
     connection.h \
     qcustomplot.h \
     reclamation.h \
+    reportage.h \
     smtp.h \
     spectateur.h \
     sponsors.h
