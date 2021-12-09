@@ -27,6 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    competition.cpp \
     exportexcelobject.cpp \
     joueur.cpp \
         main.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
     sponsors.cpp
 
 HEADERS += \
+    competition.h \
     exportexcelobject.h \
     joueur.h \
         mainwindow.h \

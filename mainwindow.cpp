@@ -1,24 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtDebug>
-#include <QMessageBox>
-#include <QTableView>
-#include <QAbstractItemView>
-#include <joueur.h>
-#include "exportexcelobject.h"
-#include <QIntValidator>
-#include "reclamation.h"
-#include <QSystemTrayIcon>
-#include <QRegExpValidator>
-#include <QPlainTextEdit>
-#include <QPrinter>
-#include <QPrinterInfo>
-#include <QPrintDialog>
-#include <QTextStream>
-#include <QPainter>
-#include <QFileDialog>
-#include <QtPrintSupport/QPrinter>
-#include <QTextDocument>
+
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent),
@@ -36,10 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
   modell->setQuery("select NOM from COMPETITIONS order by NOM");
   ui->comboBox->setModel(modell);
   /////////////////////////////////////////////////////////////////////////
-
 //partie ghassen
     ui->tableViewg->setModel(Stmp.Afficher());
-    ///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 //partie firas
     ui->tabWidgetf->setCurrentIndex(0);
@@ -53,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
        ui->tab_spectateur->setModel(S.afficher());
 //////////////////////////////////////////////////////////////////
 //partie joy
-       ui->setupUi(this);
         ui->tableView_reportA->setModel(R.afficher());
         ui->comboBox_Trie->addItem("Tout");
         ui->comboBox_Trie->addItem("Editeur");
@@ -63,13 +45,41 @@ MainWindow::MainWindow(QWidget *parent)
        /*QChartView *chartview= new QChartView(R.statistique());
        chartview->setRenderHint(QPainter::Antialiasing);
        chartview->setParent(ui->tab_statistiq);*/
-
+////////////////////////////////////////////////////////////////////////
+//partie oussama
+        QStringList list=(QStringList()<<"course"<<"saut"<<"natation");
+        ui->comboBox->addItems(list);
+        ui->tableView->setModel(ajtmp.afficher());
+        ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+/////////////////////////////////////////////////////////////////////////////stackedwidget
+void MainWindow::on_pushconnect_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+    if(ui->stackedWidget->currentIndex()==3){
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model = rmp.afficher();
+    QDate d;
+    int count=0;
+    for (int i = 0; i < model->rowCount(); i++) {
+        QDate k=model->data(model->index(i,4)).toDate();
+        if ((k.addDays(3) < d.currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
+        {
+            count++;
+        }
+    }
+        if (count != 0){
+            QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
+            QString res=QString::number(count);
+            notifyIcon->show();
+            notifyIcon->showMessage("warning ! ","you have "+res+" reclamation not done",QSystemTrayIcon::Information,15000);
+        }}
 }
 ////////////////////////////////////////////////////////////////rania
 void MainWindow::on_pushButton_clicked()
@@ -272,9 +282,9 @@ void MainWindow::on_tabWidget_currentChanged(int index)
               gradient.setColorAt(0, QColor(90, 90, 90));
               gradient.setColorAt(0.38, QColor(105, 105, 105));
               gradient.setColorAt(1, QColor(70, 70, 70));
-              ui->plot_2->setBackground(QBrush(gradient));
+              ui->plot->setBackground(QBrush(gradient));
 
-              QCPBars *amande = new QCPBars(ui->plot_2->xAxis, ui->plot_2->yAxis);
+              QCPBars *amande = new QCPBars(ui->plot->xAxis, ui->plot->yAxis);
               amande->setAntialiased(false);
               amande->setStackingGap(1);
                //couleurs
@@ -289,30 +299,30 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 
               QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
               textTicker->addTicks(ticks, labels);
-              ui->plot_2->xAxis->setTicker(textTicker);
-              ui->plot_2->xAxis->setTickLabelRotation(60);
-              ui->plot_2->xAxis->setSubTicks(false);
-              ui->plot_2->xAxis->setTickLength(0, 4);
-              ui->plot_2->xAxis->setRange(0, 8);
-              ui->plot_2->xAxis->setBasePen(QPen(Qt::white));
-              ui->plot_2->xAxis->setTickPen(QPen(Qt::white));
-              ui->plot_2->xAxis->grid()->setVisible(true);
-              ui->plot_2->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
-              ui->plot_2->xAxis->setTickLabelColor(Qt::white);
-              ui->plot_2->xAxis->setLabelColor(Qt::white);
+              ui->plot->xAxis->setTicker(textTicker);
+              ui->plot->xAxis->setTickLabelRotation(60);
+              ui->plot->xAxis->setSubTicks(false);
+              ui->plot->xAxis->setTickLength(0, 4);
+              ui->plot->xAxis->setRange(0, 8);
+              ui->plot->xAxis->setBasePen(QPen(Qt::white));
+              ui->plot->xAxis->setTickPen(QPen(Qt::white));
+              ui->plot->xAxis->grid()->setVisible(true);
+              ui->plot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+              ui->plot->xAxis->setTickLabelColor(Qt::white);
+              ui->plot->xAxis->setLabelColor(Qt::white);
 
               // axe des ordonnées
-              ui->plot_2->yAxis->setRange(0,10);
-              ui->plot_2->yAxis->setPadding(5);
-              ui->plot_2->yAxis->setLabel("Statistiques");
-              ui->plot_2->yAxis->setBasePen(QPen(Qt::white));
-              ui->plot_2->yAxis->setTickPen(QPen(Qt::white));
-              ui->plot_2->yAxis->setSubTickPen(QPen(Qt::white));
-              ui->plot_2->yAxis->grid()->setSubGridVisible(true);
-              ui->plot_2->yAxis->setTickLabelColor(Qt::white);
-              ui->plot_2->yAxis->setLabelColor(Qt::white);
-              ui->plot_2->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
-              ui->plot_2->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+              ui->plot->yAxis->setRange(0,10);
+              ui->plot->yAxis->setPadding(5);
+              ui->plot->yAxis->setLabel("Statistiques");
+              ui->plot->yAxis->setBasePen(QPen(Qt::white));
+              ui->plot->yAxis->setTickPen(QPen(Qt::white));
+              ui->plot->yAxis->setSubTickPen(QPen(Qt::white));
+              ui->plot->yAxis->grid()->setSubGridVisible(true);
+              ui->plot->yAxis->setTickLabelColor(Qt::white);
+              ui->plot->yAxis->setLabelColor(Qt::white);
+              ui->plot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+              ui->plot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
 
               // ajout des données  (statistiques de la quantité)//
 
@@ -324,14 +334,14 @@ void MainWindow::on_tabWidget_currentChanged(int index)
                               }
               amande->setData(ticks, PlaceData);
 
-              ui->plot_2->legend->setVisible(true);
-              ui->plot_2->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
-              ui->plot_2->legend->setBrush(QColor(255, 255, 255, 100));
-              ui->plot_2->legend->setBorderPen(Qt::NoPen);
+              ui->plot->legend->setVisible(true);
+              ui->plot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+              ui->plot->legend->setBrush(QColor(255, 255, 255, 100));
+              ui->plot->legend->setBorderPen(Qt::NoPen);
               QFont legendFont = font();
               legendFont.setPointSize(5);
-              ui->plot_2->legend->setFont(legendFont);
-              ui->plot_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+              ui->plot->legend->setFont(legendFont);
+              ui->plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
 void MainWindow::on_export_2_clicked()
@@ -349,29 +359,7 @@ void MainWindow::on_export_2_clicked()
     obj.export2Excel();
 
 }
-/////////////////////////////////////////////////////////////////////////////stackedwidget
-void MainWindow::on_pushconnect_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(6);
-    if(ui->stackedWidget->currentIndex()==3){
-    QSqlQueryModel *model=new QSqlQueryModel();
-    model = rmp.afficher();
-    QDate d;
-    int count=0;
-    for (int i = 0; i < model->rowCount(); i++) {
-        QDate k=model->data(model->index(i,4)).toDate();
-        if ((k.addDays(3) < d.currentDate()) && (model->data(model->index(i,2)).toString() != "done"))
-        {
-            count++;
-        }
-    }
-        if (count != 0){
-            QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
-            QString res=QString::number(count);
-            notifyIcon->show();
-            notifyIcon->showMessage("warning ! ","you have "+res+" reclamation not done",QSystemTrayIcon::Information,15000);
-        }}
-}
+
 /////////////////////////////////////////////////////////////////////////////ghassen
 void MainWindow::on_pushButtonmodif_clicked()
 {
@@ -1051,4 +1039,202 @@ void MainWindow::on_supp_tout_clicked()
     else
         msgBox.setText("Echec de suppression");
     msgBox.exec();
+}
+///////////////////////////////////////////////////////////////////////partie oussama
+//oussama
+
+
+void MainWindow::on_pushajouto_clicked()
+{
+    QString nom=ui->l_nom->text();
+       QString lieu=ui->l_lieu->text();
+       QDate date_d= ui->d_d->date();
+           qDebug() << "Date Selected: " << date_d;
+
+           QDate date_f= ui->d_f->date();
+               qDebug() << "Date Selected: " << date_f;
+       QString desc=ui->text_desc->toPlainText();
+       QString cb = ui->comboBox_trio->currentText();
+       competition R(nom, lieu, desc,cb,date_d, date_f);
+                   bool test=R.ajouter();
+                   ui->tableViewo->setModel(ajtmp.afficher());
+                   QMessageBox msgBox;
+                   if (test)
+                   {
+                       ui->tableViewo->setModel(ajtmp.afficher());
+                       msgBox.setText("Ajout avec succés.");
+                       msgBox.exec();
+                   }
+}
+
+void MainWindow::on_pushmodifo_clicked()
+{
+    ui->tableViewo->setModel(ajtmp.afficher());
+           ui->tableViewo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+           QString code=ui->ido->text();
+           QString nom=ui->l_nom->text();
+           QString lieu=ui->l_lieu->text();
+           QDate date_d= ui->d_d->date();
+               qDebug() << "Date Selected: " << date_d;
+
+               QDate date_f= ui->d_f->date();
+                   qDebug() << "Date Selected: " << date_f;
+           QString desc=ui->text_desc->toPlainText();
+           QString cb = ui->comboBox_trio->currentText();
+
+           competition dos;
+           bool test=dos.modifier(nom,lieu,desc,cb,date_d,date_f,code);
+           QMessageBox msBox;
+           if(test)
+           {
+               ui->tableViewo->setModel(dos.afficher());
+               ui->tableViewo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+               msBox.setText("modification reussite");
+               msBox.exec();
+           }
+           else
+           {
+               msBox.setText("ERREUR");
+               msBox.exec();}
+}
+
+void MainWindow::on_tableViewo_clicked(const QModelIndex &index)
+{
+    QString val=ui->tableViewo->model()->data(index).toString();
+
+            QSqlQuery qry;
+            qry.prepare("select * from COMPETITIONS where CODE_COMPETITION='"+val+"'  " );
+
+            if(qry.exec())
+            {
+                while(qry.next())
+                {
+                    ui->ido->setText(qry.value(0).toString());
+
+                    ui->l_nom->setText(qry.value(1).toString());
+                    ui->l_lieu->setText(qry.value(2).toString());
+                    ui->d_d->setDate(qry.value(3).toDate());
+                    ui->d_f->setDate(qry.value(4).toDate());
+                    ui->text_desc->setText(qry.value(5).toString());
+                    ui->comboBox_trio->setEditText(qry.value(6).toString());
+
+                }
+            }
+}
+
+void MainWindow::on_pushsuppo_clicked()
+{
+    QMessageBox msgBox ;
+        int cc = ui->ido->text().toInt();
+            bool test=ajtmp.supprimer(cc);
+            if(test)
+            {ui->tableViewo->setModel(ajtmp.afficher());//refresh
+                /*QMessageBox::information(nullptr, QObject::tr("Supprime un dossier"),
+                            QObject::tr(" Dossier supprimé.\n"
+                                        "Click Cancel to exit."), QMessageBox::Cancel)*/
+                msgBox.setText(" supprimé.");
+                msgBox.exec();
+
+            }
+            else
+            {QMessageBox::critical(nullptr, QObject::tr("Supprimer failed "),
+                            QObject::tr("Erreur !.\n"
+                                        "Click Cancel to exit."), QMessageBox::Cancel);}
+}
+
+void MainWindow::on_pushtrio_clicked()
+{
+    QMessageBox msgBox ;
+       QSqlQueryModel *model = new QSqlQueryModel();
+
+
+                switch (ui->comboBox_trio->currentIndex()) {
+                case 0:
+                    model->setQuery("select * from COMPETITIONS order by NOM ASC");
+                    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                    model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                    model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                    model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                    break;
+                case 1:
+                    model->setQuery("select * from COMPETITIONS order by CODE_COMPETITION ASC");
+                    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                    model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                    model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                    model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                    break;
+                case 2:
+                    model->setQuery("select * from COMPETITIONS order by DATE_DE ASC");
+                    model->setHeaderData(0, Qt::Horizontal, QObject::tr("CODE_COMPETITION"));
+                    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+                    model->setHeaderData(2, Qt::Horizontal, QObject::tr("LIEU"));
+                    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_DE"));
+                    model->setHeaderData(4, Qt::Horizontal, QObject::tr("DATE_FIN"));
+                    model->setHeaderData(5, Qt::Horizontal, QObject::tr("DESCR"));
+                    model->setHeaderData(6, Qt::Horizontal, QObject::tr("TYPE"));
+                    break;
+                }
+                ui->tableViewo->setModel(model);
+                ui->tableViewo->show();
+                msgBox.setText("Tri avec succés.");
+                msgBox.exec();
+}
+void MainWindow::PrintWidget(QWidget* widget) {
+
+  QPixmap pix(widget->size());
+  QPainter painter(&pix);
+  widget->render(&painter);
+  painter.end();
+  QPrinter printer(QPrinter::HighResolution);
+  printer.setOrientation(QPrinter::Landscape);
+  printer.setOutputFormat(QPrinter::PdfFormat);
+  printer.setPaperSize(QPrinter::A4);
+  printer.setOutputFileName("C:/Users/Firas/Desktop/myfile.pdf"); // will be in build folder
+
+  painter.begin(&printer);
+  double xscale = printer.pageRect().width() / double(pix.width());
+  double yscale = printer.pageRect().height() / double(pix.height());
+  double scale = qMin(xscale, yscale);
+  painter.translate(printer.paperRect().x() + printer.pageRect().width() / 2,
+                    printer.paperRect().y() + printer.pageRect().height() / 2);
+  painter.scale(scale, scale);
+  painter.translate(-widget->width() / 2, -widget->height() / 2);
+  painter.drawPixmap(0, 0, pix);
+
+QTextDocument doc;
+
+doc.setHtml("htmlcontent");
+doc.drawContents(&painter);
+
+  painter.end();
+}
+void MainWindow::on_pushpdfo_clicked()
+{
+    PrintWidget(ui->tableViewo) ;
+}
+
+
+void MainWindow::on_recho_textChanged(const QString &arg1)
+{
+    ui->tableViewo->setModel(ajtmp.recherche(arg1));
+}
+
+void MainWindow::on_pushsendO_clicked()
+{
+    smtpo = new Smtp("gestion.recs@gmail.com" , "gestiongestion", "smtp.gmail.com",465);
+        connect(smtpo, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+        msgo=ui->plainO->toPlainText();
+
+        smtpo->sendMail("firas_test",ui->mailO->text(),ui->objetO->text(),msgo);
+
+        QMessageBox::information(nullptr, QObject::tr("SENT"),
+                                 QObject::tr("Email Sent Successfully.\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
 }

@@ -2,15 +2,19 @@
 #include <QApplication>
 #include <QMessageBox>
 #include "connection.h"
-#include "joueur.h"
-#include "reclamation.h"
-#include <QFile>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Connection c;
     bool test=c.createconnect();
+    /*QFile file("C:/Users/Firas/Desktop/integ finale locale/Irrorater.qss");
+               file.open(QFile::ReadOnly);
+
+               QString styleSheet { QLatin1String(file.readAll()) };
+
+               //setup stylesheet
+               a.setStyleSheet(styleSheet);*/
         MainWindow w;
     if(test)
     {w.show();

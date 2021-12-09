@@ -1,13 +1,37 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include <QMainWindow>
+#include <QtWidgets/QMessageBox>
+#include <QDebug>
+#include <QMessageBox>
+#include <QSqlQuery>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QPrinter>
+#include <QSystemTrayIcon>
+#include <QRegExpValidator>
+#include <QPlainTextEdit>
+#include <QPrinterInfo>
+#include <QPrintDialog>
+#include <QTextStream>
+#include <QPainter>
+#include <QFileDialog>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
+#include <QtDebug>
+#include <QMessageBox>
+#include <QTableView>
+#include <QAbstractItemView>
+#include <QIntValidator>
+#include "exportexcelobject.h"
 #include "joueur.h"
 #include "sponsors.h"
-#include <QMainWindow>
 #include "reclamation.h"
-#include "smtp.h"
-#include <QtWidgets/QMessageBox>
 #include "spectateur.h"
 #include "reportage.h"
+#include <competition.h>
+#include "smtp.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -122,16 +146,38 @@ private slots:
 
     void on_supp_tout_clicked();
 
+    void on_pushajouto_clicked();
+
+    void on_pushmodifo_clicked();
+
+    void on_tableViewo_clicked(const QModelIndex &index);
+
+    void on_pushsuppo_clicked();
+
+    void on_pushtrio_clicked();
+
+    void PrintWidget(QWidget* widget);
+
+    void on_pushpdfo_clicked();
+
+    void on_recho_textChanged(const QString &arg1);
+
+    void on_pushsendO_clicked();
+
 private:
     Ui::MainWindow *ui;
-   joueur ptmp;
-   SPONSORS Stmp;
-   Reclamation rmp;
-   Smtp* smtp;
-   QString msg;
-   QString mail;
-   Spectateur S;
-   Reportage R;
+    joueur ptmp;
+    SPONSORS Stmp;
+    Reclamation rmp;
+    Spectateur S;
+    Reportage R;
+    competition ajtmp;
+    Smtp* smtp;
+    QString msg;
+    QString mail;
+    Smtp* smtpo;
+    QString msgo;
+    QString mailo;
 };
 
 #endif // MAINWINDOW_H
