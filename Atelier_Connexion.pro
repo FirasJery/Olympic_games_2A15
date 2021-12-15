@@ -63,3 +63,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 QT       += core gui sql printsupport multimedia
 QT += widgets multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+
+RESOURCES += \
+    logo.qrc \
+    logo1.qrc

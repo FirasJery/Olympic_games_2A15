@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui->setupUi(this);
   ui->stackedWidget->setCurrentIndex(0);// use this to change the page in the stacked widget
-
+  ui->frame->setStyleSheet("background-color: transparent;");
 //partierania
   ui->tableView->setModel(ptmp.afficher());
   //controle saisir
@@ -41,10 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->comboBox_Trie->addItem("Editeur");
         ui->comboBox_Trie->addItem("Source");
         ui->comboBox_Trie->addItem("Date");
-
-       /*QChartView *chartview= new QChartView(R.statistique());
-       chartview->setRenderHint(QPainter::Antialiasing);
-       chartview->setParent(ui->tab_statistiq);*/
 ////////////////////////////////////////////////////////////////////////
 //partie oussama
         QStringList list=(QStringList()<<"course"<<"saut"<<"natation");
@@ -60,8 +56,29 @@ MainWindow::~MainWindow()
 }
 /////////////////////////////////////////////////////////////////////////////stackedwidget
 void MainWindow::on_pushconnect_clicked()
-{
+{   QString login=ui->linelogin->text();
+    QString mdp=ui->linemdp->text();
+    if ((login=="firas")&&(mdp=="firas"))
+    ui->stackedWidget->setCurrentIndex(3);
+
+    if ((login=="rania")&&(mdp=="rania"))
+    ui->stackedWidget->setCurrentIndex(1);
+
+    if ((login=="ghassen")&&(mdp=="ghassen"))
+    ui->stackedWidget->setCurrentIndex(2);
+
+    if ((login=="joy")&&(mdp=="joy"))
+    ui->stackedWidget->setCurrentIndex(4);
+  /*  QChartView *chartview= new QChartView(R.statistique());
+    chartview->setRenderHint(QPainter::Antialiasing);
+    chartview->setParent(ui->tab_statistiq);*/
+
+    if ((login=="oussama")&&(mdp=="oussama"))
     ui->stackedWidget->setCurrentIndex(5);
+
+    if ((login=="ines")&&(mdp=="ines"))
+    ui->stackedWidget->setCurrentIndex(6);
+
     if(ui->stackedWidget->currentIndex()==3){
     QSqlQueryModel *model=new QSqlQueryModel();
     model = rmp.afficher();
@@ -553,7 +570,7 @@ void MainWindow::on_push_ajoutf_clicked()
             QMessageBox::information(nullptr, QObject::tr("database is open"),
                         QObject::tr("ajout successful.\n"
                                     "Click Cancel to exit."), QMessageBox::Cancel);
-            ui->tableView->setModel(rmp.afficher());
+            ui->tableViewf->setModel(rmp.afficher());
             QSqlQueryModel *model=new QSqlQueryModel();
             model = rmp.afficher();
             int id = model->data(model->index(model->rowCount()-1,0)).toInt();
@@ -585,7 +602,7 @@ void MainWindow::on_push_modifierf_clicked()
             QMessageBox::information(nullptr, QObject::tr("database is open"),
                         QObject::tr("update successful.\n"
                                     "Click Cancel to exit."), QMessageBox::Cancel);
-            ui->tableView->setModel(rmp.afficher());
+            ui->tableViewf->setModel(rmp.afficher());
             test=R.ajouter_mod(id_upt,"modification",QDateTime::currentDateTime());
 
         }
@@ -597,14 +614,14 @@ void MainWindow::on_push_modifierf_clicked()
 
 void MainWindow::on_push_afficherf_clicked()
 {
-    ui->tableView->setModel(rmp.afficher());
+    ui->tableViewf->setModel(rmp.afficher());
 }
 
 void MainWindow::on_push_supprimerf_clicked()
 {
     bool i;
         int id_del;
-        id_del=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+        id_del=ui->tableViewf->model()->data(ui->tableViewf->model()->index(ui->tableViewf->currentIndex().row(),0)).toInt();
 
         i=rmp.supprimer(id_del);
         if(i)
@@ -612,7 +629,7 @@ void MainWindow::on_push_supprimerf_clicked()
             QMessageBox::information(nullptr, QObject::tr("database is open"),
                         QObject::tr("delete successful.\n"
                                     "Click Cancel to exit."), QMessageBox::Cancel);
-            ui->tableView->setModel(rmp.afficher());
+            ui->tableViewf->setModel(rmp.afficher());
             rmp.ajouter_mod(id_del,"suppression",QDateTime::currentDateTime());
 
         }
@@ -630,20 +647,20 @@ void MainWindow::on_pushtrif_clicked()
 
         switch (ui->comboBox->currentIndex()) {
         case 0:
-            ui->tableView->setModel(rmp.TriCategorie(cls));
+            ui->tableViewf->setModel(rmp.TriCategorie(cls));
             break;
         case 1:
-            ui->tableView->setModel(rmp.TriDate(cls));
+            ui->tableViewf->setModel(rmp.TriDate(cls));
             break;
         case 2:
-            ui->tableView->setModel(rmp.TriEtat(cls));
+            ui->tableViewf->setModel(rmp.TriEtat(cls));
             break;
         }
 }
 
 void MainWindow::on_line_rechf_textChanged(const QString &arg1)
 {
-    ui->tableView->setModel(rmp.recherche(arg1));
+    ui->tableViewf->setModel(rmp.recherche(arg1));
 }
 
 void MainWindow::on_push_sendf_clicked()
@@ -662,8 +679,8 @@ void MainWindow::on_push_sendf_clicked()
 
 void MainWindow::on_tableViewf_doubleClicked(const QModelIndex &index)
 {
-    if (index.data().toString() == ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),5)).toString()){
-           ui->tabWidget->setCurrentIndex(1);
+    if (index.data().toString() == ui->tableViewf->model()->data(ui->tableViewf->model()->index(ui->tableViewf->currentIndex().row(),5)).toString()){
+           ui->tabWidgetf->setCurrentIndex(1);
            ui->a_mailf->setText(index.data().toString());
        }
 }
@@ -1237,4 +1254,9 @@ void MainWindow::on_pushsendO_clicked()
         QMessageBox::information(nullptr, QObject::tr("SENT"),
                                  QObject::tr("Email Sent Successfully.\n"
                                              "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_pushdeco_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
 }

@@ -8,13 +8,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Connection c;
     bool test=c.createconnect();
-    /*QFile file("C:/Users/Firas/Desktop/integ finale locale/Irrorater.qss");
+    QFile file("C:/Users/Firas/Desktop/integ finale locale/Irrorater.qss");
                file.open(QFile::ReadOnly);
 
                QString styleSheet { QLatin1String(file.readAll()) };
 
                //setup stylesheet
-               a.setStyleSheet(styleSheet);*/
+               a.setStyleSheet(styleSheet);
         MainWindow w;
     if(test)
     {w.show();

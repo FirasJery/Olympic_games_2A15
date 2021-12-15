@@ -164,6 +164,8 @@ private slots:
 
     void on_pushsendO_clicked();
 
+    void on_pushdeco_clicked();
+
 private:
     Ui::MainWindow *ui;
     joueur ptmp;
